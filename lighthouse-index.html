@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Lighthouse Academy</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-1: #9D927F; /* Lightest taupe */
+      --color-2: #271C16; /* Darkest brown */
+      --color-3: #B0A289; /* Medium taupe */
+      --color-4: #7F7260; /* Medium brown */
+      --color-5: #6A6054; /* Dark taupe */
+      --light-text: #f5f3e7; /* Off-white parchment */
+      --dark-text: #271C16; /* Same as darkest brown */
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'IM Fell English', Georgia, serif;
+      background-color: var(--color-2); /* Darkest brown */
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: var(--light-text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 1400px;
+      width: 100%;
+      position: relative;
+    }
+    
+    .header {
+      margin-bottom: 30px;
+      text-align: center;
+      position: relative;
+      padding: 20px;
+    }
+    
+    .header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 4px;
+      background: linear-gradient(to right, transparent, var(--color-3), transparent);
+    }
+    
+    .header::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 4px;
+      background: linear-gradient(to right, transparent, var(--color-3), transparent);
+    }
+    
+    .header h1 {
+      font-family: 'IM Fell English', Georgia, serif;
+      font-size: 48px;
+      color: var(--light-text);
+      margin-bottom: 5px;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+    
+    .lighthouse-image-fallback {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 8px solid var(--color-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background-color: var(--color-3);
+      overflow: hidden;
+    }
+    
+    .lighthouse-text {
+      position: absolute;
+      font-size: 48px;
+      font-weight: 700;
+      font-family: 'IM Fell English', Georgia, serif;
+      color: var(--light-text);
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+      z-index: 1;
+    }
+    
+    .lighthouse-container {
+      position: relative;
+      width: 700px;
+      height: 700px;
+      margin: 0 auto;
+      border-radius: 50%;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 0 30px rgba(157, 146, 127, 0.4);
+      transition: transform 0.3s ease;
+    }
+    
+    .lighthouse-container:active {
+      transform: scale(0.98);
+    }
+    
+    .lighthouse-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+      border-radius: 50%;
+      border: 8px solid var(--color-1);
+    }
+    
+    .enter-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(39, 28, 22, 0.8);
+      padding: 15px 30px;
+      border-radius: 10px;
+      color: var(--light-text);
+      font-size: 24px;
+      font-weight: bold;
+      font-family: 'IM Fell English', Georgia, serif;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--color-3);
+      transition: var(--transition);
+      /* Add torn paper effect */
+      clip-path: polygon(
+        0% 5%, 5% 0%, 95% 0%, 100% 5%,
+        100% 95%, 95% 100%, 5% 100%, 0% 95%
+      );
+    }
+    
+    .lighthouse-container:hover .enter-overlay {
+      background-color: var(--color-3);
+      color: var(--color-2);
+      box-shadow: 0 0 20px var(--color-3);
+    }
+    
+    .pulse-ring {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 50%;
+      border: 3px solid rgba(157, 146, 127, 0.5);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      70% {
+        transform: scale(1.05);
+        opacity: 0;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0;
+      }
+    }
+    
+    /* Simple gradient footer */
+    .footer-gradient {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: linear-gradient(to top, var(--color-5), transparent);
+      z-index: -1;
+    }
+    
+    .disclaimer {
+      max-width: 800px;
+      margin-top: 40px;
+      text-align: center;
+      font-size: 15px;
+      color: var(--light-text);
+      line-height: 1.6;
+      padding: 0 20px;
+      /* Add a paper texture background */
+      background-color: rgba(106, 96, 84, 0.7);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      position: relative;
+      /* Add a subtle torn edge effect */
+      clip-path: polygon(
+        0% 5%, 2% 0%, 98% 0%, 100% 5%,
+        100% 95%, 98% 100%, 2% 100%, 0% 95%
+      );
+    }
+    
+    /* Add decorative corners to disclaimer */
+    .disclaimer::before,
+    .disclaimer::after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2050%2050%22%3E%0A%20%20%3Cpath%20d%3D%22M0%200%20L0%2040%20C0%2020%2C%2020%200%2C%2040%200%20Z%22%20fill%3D%22none%22%20stroke%3D%22%23B0A289%22%20stroke-width%3D%221.5%22%20%2F%3E%0A%20%20%3Cpath%20d%3D%22M0%205%20L0%2030%20C0%2015%2C%2015%200%2C%2030%200%20Z%22%20fill%3D%22none%22%20stroke%3D%22%239D927F%22%20stroke-width%3D%221%22%20%2F%3E%0A%20%20%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%221.5%22%20fill%3D%22%23B0A289%22%20%2F%3E%0A%20%20%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%221.5%22%20fill%3D%22%23B0A289%22%20%2F%3E%0A%20%20%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%221.5%22%20fill%3D%22%23B0A289%22%20%2F%3E%0A%3C%2Fsvg%3E');
+      background-size: contain;
+      background-repeat: no-repeat;
+      opacity: 0.8;
+    }
+    
+    .disclaimer::before {
+      top: 5px;
+      left: 5px;
+    }
+    
+    .disclaimer::after {
+      bottom: 5px;
+      right: 5px;
+      transform: rotate(180deg);
+    }
+    
+    /* Mobile optimization */
+    @media (max-width: 768px) {
+      .lighthouse-container {
+        width: 100%;
+        max-width: 300px;
+        height: 300px;
+        position: relative;
+      }
+      
+      .lighthouse-text {
+        font-size: 36px;
+      }
+      
+      .enter-overlay {
+        font-size: 18px;
+        padding: 10px 20px;
+      }
+      
+      .header h1 {
+        font-size: 32px;
+      }
+    }
+    
+    /* Tablet optimization */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .lighthouse-container {
+        width: 500px;
+        height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="footer-gradient"></div>
+  
+  <div class="main-container">
+    <div class="header">
+      <h1>The Lighthouse Academy</h1>
+    </div>
+    
+    <!-- Main Lighthouse with entry overlay -->
+    <div id="entry-section">
+      <div class="lighthouse-container" id="lighthouse-container">
+        <div class="pulse-ring"></div>
+        
+        <!-- Lighthouse image with fallback -->
+        <img src="https://raw.githubusercontent.com/uqsmitc6/The-Lighthouse/refs/heads/main/Lighthouse2.jpg" alt="Lighthouse" class="lighthouse-image" crossorigin="anonymous" onerror="this.style.display='none'; this.parentNode.querySelector('.lighthouse-image-fallback').style.display='flex';">
+        
+        <div class="lighthouse-image-fallback" style="display: none;">
+          <span class="lighthouse-text">Lighthouse</span>
+        </div>
+        
+        <div class="enter-overlay">Enter the Lighthouse</div>
+      </div>
+    </div>
+    
+    <div class="disclaimer">
+      <p>The Lighthouse Academy guides you in a critical thinking exercise.</p>
+    </div>
+  </div>
+  
+  <script>
+// Configuration
+const AUTH_API_URL = 'https://script.google.com/macros/s/AKfycbyoxKiTkx0V12Rg3oGEXAOm-VfLAX6MPtM8uLWgtC4fOXfepOZ6iDYBdxhlbIPWTVMg/exec';
+
+
+// Get DOM elements
+const lighthouseContainer = document.getElementById('lighthouse-container');
+
+// State tracking
+let showingLogin = false;
+let verifiedStudent = null;
+
+// Click handler for lighthouse
+lighthouseContainer.addEventListener('click', function() {
+  if (!showingLogin) {
+    showLoginForm();
+  }
+});
+
+// Show login form
+function showLoginForm() {
+  showingLogin = true;
+  
+  // Create login overlay
+  const loginOverlay = document.createElement('div');
+  loginOverlay.id = 'login-overlay';
+  loginOverlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(39, 28, 22, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+  `;
+  
+  loginOverlay.innerHTML = `
+    <div style="
+      background-color: rgba(39, 28, 22, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      border: 2px solid var(--color-3);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      clip-path: polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0% 95%);
+    ">
+      <h3 style="color: var(--color-3); margin-bottom: 20px; font-size: 24px;">Enter Student ID</h3>
+      <input 
+        type="text" 
+        id="studentIdInput" 
+        placeholder="e.g., uqsmitc6" 
+        style="
+          width: 100%;
+          padding: 15px 20px;
+          border: 2px solid var(--color-1);
+          border-radius: 10px;
+          background-color: rgba(255, 255, 255, 0.1);
+          color: var(--light-text);
+          font-size: 16px;
+          font-family: 'IM Fell English', Georgia, serif;
+          margin-bottom: 20px;
+        "
+      >
+      <button 
+        id="verifyBtn" 
+        style="
+          width: 100%;
+          padding: 15px;
+          border: none;
+          border-radius: 10px;
+          background-color: var(--color-3);
+          color: var(--color-2);
+          font-size: 18px;
+          font-weight: 600;
+          font-family: 'IM Fell English', Georgia, serif;
+          cursor: pointer;
+          margin-bottom: 15px;
+        "
+      >Enter The Lighthouse</button>
+      <button 
+        id="cancelBtn" 
+        style="
+          background: transparent;
+          border: 1px solid var(--color-1);
+          color: var(--color-1);
+          padding: 10px 20px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-family: 'IM Fell English', Georgia, serif;
+        "
+      >Cancel</button>
+      <p id="error-msg" style="color: #ff6b6b; margin-top: 15px; font-size: 14px;"></p>
+      <div id="loading" style="display: none; margin-top: 15px;">
+        <span style="color: var(--light-text);">Verifying...</span>
+      </div>
+    </div>
+  `;
+  
+  document.body.appendChild(loginOverlay);
+  
+  // Add event listeners
+  document.getElementById('verifyBtn').addEventListener('click', verifyStudentId);
+  document.getElementById('cancelBtn').addEventListener('click', hideLoginForm);
+  document.getElementById('studentIdInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      verifyStudentId();
+    }
+  });
+  
+  // Focus input
+  setTimeout(() => {
+    document.getElementById('studentIdInput').focus();
+  }, 100);
+}
+
+// Hide login form
+function hideLoginForm() {
+  const overlay = document.getElementById('login-overlay');
+  if (overlay) {
+    overlay.remove();
+  }
+  showingLogin = false;
+}
+
+// Verify student ID
+async function verifyStudentId() {
+  const studentId = document.getElementById('studentIdInput').value.trim();
+  const errorMsg = document.getElementById('error-msg');
+  const loading = document.getElementById('loading');
+  
+  errorMsg.textContent = '';
+  
+  if (!studentId) {
+    errorMsg.textContent = 'Please enter a student ID';
+    return;
+  }
+  
+  loading.style.display = 'block';
+  
+  try {
+    const response = await fetch(`${AUTH_API_URL}?id=${encodeURIComponent(studentId)}`);
+    const result = await response.json();
+    
+    loading.style.display = 'none';
+    
+    if (result.valid) {
+      // Store student data
+      localStorage.setItem('lighthouse_student_id', result.id);
+      localStorage.setItem('lighthouse_student_name', result.name);
+      
+      // Show success and redirect
+      showSuccessAndRedirect(result);
+    } else {
+      errorMsg.textContent = 'Student ID not found. Please check your ID.';
+    }
+  } catch (error) {
+    loading.style.display = 'none';
+    errorMsg.textContent = 'Error verifying ID. Please try again.';
+    console.error('Verification error:', error);
+  }
+}
+
+// Show success message and redirect
+function showSuccessAndRedirect(student) {
+  const overlay = document.getElementById('login-overlay');
+  overlay.innerHTML = `
+    <div style="
+      background-color: rgba(39, 28, 22, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      border: 2px solid var(--color-3);
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      clip-path: polygon(0% 5%, 5% 0%, 95% 0%, 100% 5%, 100% 95%, 95% 100%, 5% 100%, 0% 95%);
+    ">
+      <h3 style="color: var(--light-text); margin-bottom: 20px; font-size: 20px;">
+        Welcome, ${student.name}!<br>Ready to begin your journey?
+      </h3>
+      <button 
+        id="confirmBtn" 
+        style="
+          width: 100%;
+          padding: 15px;
+          border: none;
+          border-radius: 10px;
+          background-color: var(--color-3);
+          color: var(--color-2);
+          font-size: 18px;
+          font-weight: 600;
+          font-family: 'IM Fell English', Georgia, serif;
+          cursor: pointer;
+          margin-bottom: 10px;
+        "
+      >Yes, that's me</button>
+      <button 
+        id="backBtn" 
+        style="
+          background: transparent;
+          border: 1px solid var(--color-1);
+          color: var(--color-1);
+          padding: 10px 20px;
+          border-radius: 10px;
+          cursor: pointer;
+          font-family: 'IM Fell English', Georgia, serif;
+        "
+      >No, that's not me</button>
+    </div>
+  `;
+  
+  document.getElementById('confirmBtn').addEventListener('click', () => {
+    window.location.href = 'lighthouse-main.html';
+  });
+  
+  document.getElementById('backBtn').addEventListener('click', showLoginForm);
+}
+
+// Check if already logged in
+document.addEventListener('DOMContentLoaded', function() {
+  const existingStudentId = localStorage.getItem('lighthouse_student_id');
+  if (existingStudentId) {
+    // Redirect to main page if already logged in
+    window.location.href = 'lighthouse-main.html';
+  }
+});
+
+// Add CSS animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>

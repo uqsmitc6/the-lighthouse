@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keeper Cam | The Lighthouse</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+
+
+    .message.keeper strong {
+    color: var(--color-1); /* Lighter taupe color for emphasis */
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .message.keeper em {
+    font-style: italic;
+    color: var(--color-3);
+    }
+    :root {
+      --color-1: #9D927F; /* Lightest taupe */
+      --color-2: #271C16; /* Darkest brown */
+      --color-3: #B0A289; /* Medium taupe */
+      --color-4: #7F7260; /* Medium brown */
+      --color-5: #6A6054; /* Dark taupe */
+      --light-text: #f5f3e7; /* Off-white parchment */
+      --dark-text: #271C16; /* Same as darkest brown */
+      --border-radius: 12px;
+      --transition: all 0.3s ease;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'IM Fell English', Georgia, serif;
+      background-color: var(--color-2);
+      color: var(--light-text);
+      min-height: 100vh;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* Background with semi-opaque overlay */
+    body::before {
+      content: "";
+      background-image: url('https://raw.githubusercontent.com/uqsmitc6/The-Lighthouse/refs/heads/main/stormyseas.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.4;
+      z-index: -2;
+    }
+    
+    /* Semi-opaque darkest brown overlay */
+    body::after {
+      content: "";
+      background-color: var(--color-2);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.7;
+      z-index: -1;
+    }
+    
+    /* Header Navigation */
+    .header-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(39, 28, 22, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid var(--color-3);
+      padding: 15px 20px;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .home-button {
+      background-color: transparent;
+      color: var(--color-3);
+      border: 2px solid var(--color-3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-family: 'IM Fell English', Georgia, serif;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .home-button:hover {
+      background-color: var(--color-3);
+      color: var(--color-2);
+    }
+    
+    .lighthouse-title {
+      font-size: 24px;
+      color: var(--light-text);
+      font-weight: normal;
+    }
+    
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .student-info {
+      font-size: 16px;
+      color: var(--color-1);
+    }
+    
+    /* Main Container */
+    .main-container {
+      max-width: 1000px;
+      margin: 80px auto 0;
+      padding: 20px;
+    }
+    
+    /* Keeper Cam Header */
+    .keeper-header {
+      text-align: center;
+      margin-bottom: 30px;
+      padding: 30px;
+      background-color: rgba(39, 28, 22, 0.8);
+      border-radius: var(--border-radius);
+      border: 2px solid var(--color-3);
+      clip-path: polygon(
+        0% 5%, 5% 0%, 95% 0%, 100% 5%,
+        100% 95%, 95% 100%, 5% 100%, 0% 95%
+      );
+      position: relative;
+    }
+    
+    .keeper-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--color-1);
+      margin: 0 auto 20px;
+      display: block;
+      object-fit: cover;
+    }
+    
+    .keeper-header h1 {
+      font-size: 36px;
+      color: var(--light-text);
+      margin-bottom: 10px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+    
+    .keeper-header p {
+      font-size: 18px;
+      color: var(--color-1);
+      font-style: italic;
+      line-height: 1.6;
+    }
+    
+    /* Progress Indicator */
+    .progress-container {
+      margin-bottom: 30px;
+      background-color: rgba(39, 28, 22, 0.85);
+      border: 2px solid var(--color-1);
+      border-radius: var(--border-radius);
+      padding: 20px;
+    }
+    
+    .progress-title {
+      font-size: 20px;
+      color: var(--color-3);
+      margin-bottom: 15px;
+      text-align: center;
+    }
+    
+    .progress-themes {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    
+    .theme-step {
+      flex: 1;
+      min-width: 100px;
+      padding: 8px 12px;
+      background-color: var(--color-5);
+      border-radius: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--color-1);
+      border: 1px solid var(--color-4);
+      transition: var(--transition);
+    }
+    
+    .theme-step.active {
+      background-color: var(--color-3);
+      color: var(--color-2);
+      font-weight: bold;
+      transform: scale(1.05);
+    }
+    
+    .theme-step.completed {
+      background-color: rgba(74, 103, 65, 0.7);
+      color: #90EE90;
+      border-color: #4A6741;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      background-color: var(--color-5);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--color-3), var(--color-1));
+      border-radius: 4px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+    
+    /* Chat Interface */
+    .chat-container {
+      background-color: rgba(39, 28, 22, 0.9);
+      border: 2px solid var(--color-1);
+      border-radius: var(--border-radius);
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .chat-header {
+      background-color: rgba(106, 96, 84, 0.7);
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--color-4);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .chat-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--color-3);
+      object-fit: cover;
+    }
+    
+    .chat-info h3 {
+      color: var(--light-text);
+      font-size: 18px;
+      margin-bottom: 3px;
+    }
+    
+    .chat-status {
+      color: var(--color-1);
+      font-size: 14px;
+      font-style: italic;
+    }
+    
+    .chat-messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .message {
+      max-width: 80%;
+      padding: 15px 20px;
+      border-radius: 20px;
+      line-height: 1.5;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .message.keeper {
+      background-color: rgba(106, 96, 84, 0.8);
+      color: var(--light-text);
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+      border: 1px solid var(--color-4);
+    }
+    
+    .message.student {
+      background-color: rgba(176, 162, 137, 0.8);
+      color: var(--color-2);
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+      border: 1px solid var(--color-3);
+    }
+    
+    .message.system {
+      background-color: rgba(139, 90, 60, 0.3);
+      color: var(--color-1);
+      align-self: center;
+      font-style: italic;
+      font-size: 14px;
+      border: 1px solid #8B5A3C;
+      text-align: center;
+    }
+    
+    .typing-indicator {
+      display: none;
+      align-self: flex-start;
+      padding: 15px 20px;
+      background-color: rgba(106, 96, 84, 0.8);
+      border-radius: 20px;
+      border-bottom-left-radius: 5px;
+      max-width: 80px;
+    }
+    
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+    }
+    
+    .typing-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--color-1);
+      border-radius: 50%;
+      animation: typing 1.4s infinite;
+    }
+    
+    .typing-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+    
+    .typing-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+    
+    @keyframes typing {
+      0%, 60%, 100% {
+        transform: translateY(0);
+        opacity: 0.4;
+      }
+      30% {
+        transform: translateY(-10px);
+        opacity: 1;
+      }
+    }
+    
+    .chat-input-container {
+      padding: 20px;
+      border-top: 1px solid var(--color-4);
+      background-color: rgba(39, 28, 22, 0.95);
+    }
+    
+    .chat-input-form {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    
+    .chat-input {
+      flex: 1;
+      min-height: 50px;
+      max-height: 120px;
+      padding: 15px 20px;
+      border: 2px solid var(--color-4);
+      border-radius: 25px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--light-text);
+      font-size: 16px;
+      font-family: 'IM Fell English', Georgia, serif;
+      resize: none;
+      overflow-y: auto;
+      transition: var(--transition);
+    }
+    
+    .chat-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    .chat-input:focus {
+      outline: none;
+      border-color: var(--color-3);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+    
+    .chat-send-btn {
+      width: 50px;
+      height: 50px;
+      border: none;
+      border-radius: 50%;
+      background-color: var(--color-3);
+      color: var(--color-2);
+      font-size: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .chat-send-btn:hover {
+      background-color: var(--color-1);
+      transform: scale(1.05);
+    }
+    
+    .chat-send-btn:disabled {
+      background-color: var(--color-5);
+      color: var(--color-4);
+      cursor: not-allowed;
+      transform: none;
+    }
+    
+    /* Summary Section */
+    .summary-container {
+      margin-top: 30px;
+      background-color: rgba(39, 28, 22, 0.9);
+      border: 2px solid var(--color-3);
+      border-radius: var(--border-radius);
+      padding: 25px;
+      display: none;
+    }
+    
+    .summary-title {
+      font-size: 24px;
+      color: var(--color-3);
+      margin-bottom: 20px;
+      text-align: center;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    }
+    
+    .summary-content {
+      background-color: rgba(106, 96, 84, 0.3);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      border: 1px solid var(--color-4);
+      white-space: pre-wrap;
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--light-text);
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 25px;
+    }
+    
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      font-size: 16px;
+      font-family: 'IM Fell English', Georgia, serif;
+      cursor: pointer;
+      transition: var(--transition);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .btn-primary {
+      background-color: var(--color-3);
+      color: var(--color-2);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--color-1);
+      transform: translateY(-2px);
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--color-3);
+      border: 2px solid var(--color-3);
+    }
+    
+    .btn-secondary:hover {
+      background-color: var(--color-3);
+      color: var(--color-2);
+    }
+    
+    /* Mobile Optimization */
+    @media (max-width: 768px) {
+      .header-nav {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 15px;
+      }
+      
+      .main-container {
+        margin-top: 120px;
+        padding: 15px;
+      }
+      
+      .keeper-header {
+        padding: 20px;
+      }
+      
+      .keeper-header h1 {
+        font-size: 28px;
+      }
+      
+      .keeper-avatar {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .progress-themes {
+        flex-direction: column;
+        gap: 8px;
+      }
+      
+      .theme-step {
+        min-width: 200px;
+      }
+      
+      .chat-container {
+        height: 500px;
+      }
+      
+      .message {
+        max-width: 90%;
+        padding: 12px 16px;
+      }
+      
+      .chat-input {
+        font-size: 14px;
+        padding: 12px 16px;
+      }
+      
+      .action-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header Navigation -->
+  <div class="header-nav">
+    <div class="nav-left">
+      <a href="lighthouse-main.html" class="home-button">
+        <span>↩</span> Lighthouse
+      </a>
+      <span class="lighthouse-title">Keeper Cam's Chamber</span>
+    </div>
+    <div class="nav-right">
+      <span class="student-info" id="student-info">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Keeper Header -->
+    <div class="keeper-header">
+      <img src="https://raw.githubusercontent.com/uqsmitc6/The-Lighthouse/refs/heads/main/keeper-cam.jpg" alt="Keeper Cam" class="keeper-avatar" onerror="this.style.display='none';">
+      <h1>Keeper Cam</h1>
+      <p>Welcome to my lighthouse, navigator. Before you set sail to interview those affected by your wicked problem, we need to chart your own waters first. Understanding yourself - your strengths, your blind spots, your assumptions - that's the compass that will guide you true.</p>
+    </div>
+
+    <!-- Progress Indicator -->
+    <div class="progress-container">
+      <h3 class="progress-title">Navigation Progress</h3>
+      <div class="progress-themes">
+        <div class="theme-step" data-theme="navigation">Navigation Check</div>
+        <div class="theme-step" data-theme="connection">Problem Connection</div>
+        <div class="theme-step" data-theme="strengths">Inner Strengths</div>
+        <div class="theme-step" data-theme="assumptions">Assumptions</div>
+        <div class="theme-step" data-theme="humility">Learning Humility</div>
+        <div class="theme-step" data-theme="vision">Impact Vision</div>
+        <div class="theme-step" data-theme="compass">Service Compass</div>
+        <div class="theme-step" data-theme="integration">Integration</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div class="chat-container">
+      <div class="chat-header">
+        <img src="https://raw.githubusercontent.com/uqsmitc6/The-Lighthouse/refs/heads/main/keeper-cam.jpg" alt="Keeper Cam" class="chat-avatar" onerror="this.style.display='none';">
+        <div class="chat-info">
+          <h3>Keeper Cam</h3>
+          <div class="chat-status" id="chat-status">Ready to begin your journey</div>
+        </div>
+      </div>
+      
+      <div class="chat-messages" id="chat-messages">
+        <!-- Messages will be added here dynamically -->
+      </div>
+      
+      <div class="typing-indicator" id="typing-indicator">
+        <div class="typing-dots">
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+          <div class="typing-dot"></div>
+        </div>
+      </div>
+      
+      <div class="chat-input-container">
+        <form class="chat-input-form" id="chat-form">
+          <textarea 
+            id="chat-input" 
+            class="chat-input" 
+            placeholder="Type here"
+            rows="1"
+          ></textarea>
+          <button type="submit" class="chat-send-btn" id="send-btn">
+            <span>➤</span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Summary Section -->
+    <div class="summary-container" id="summary-container">
+      <h2 class="summary-title">🧭 Your Lighthouse Navigation Chart</h2>
+      <div class="summary-content" id="summary-content">
+        <!-- Summary will be populated here -->
+      </div>
+      <div class="action-buttons">
+        <a href="lighthouse-main.html" class="btn btn-primary">
+          <span>⚓</span> Return to Lighthouse
+        </a>
+        <button class="btn btn-secondary" onclick="downloadSummary()">
+          <span>📜</span> Download Chart
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Add this helper function to your keeper-cam.html script section:
+function addMessageWithDelay(message, delay) {
+    setTimeout(() => {
+        addMessage('keeper', message);
+    }, delay);
+}
+
+// Then your startReflection function:
+function startReflection() {
+    // Clear any existing messages
+    chatMessages.innerHTML = '';
+    currentTheme = 0; // Start with warmup
+    conversationHistory = [];
+    
+    // Mark first theme as active
+    updateProgress();
+    
+    
+    chatStatus.textContent = 'Take your time to settle in';
+}
+    // Configuration
+    const KEEPER_API_URL = 'https://script.google.com/macros/s/AKfycbyCV14qYEJurHixhVNgwzAaGa9XmNISYWOkx96Zntk9szRPbBmsvGc1fFN4Pn6TbqMI/exec';
+
+    // In keeper-cam.html, change the THEMES array:
+    const THEMES = [
+        'warmup', 'navigation', 'connection', 'strengths', 'vision', 
+        'assumptions', 'humility', 'compass', 'integration'
+    ];
+    
+    // Current state
+    let currentTheme = 0;
+    let conversationHistory = [];
+    let isProcessing = false;
+    let studentData = null;
+    
+    // DOM elements
+    const chatMessages = document.getElementById('chat-messages');
+    const chatInput = document.getElementById('chat-input');
+    const sendBtn = document.getElementById('send-btn');
+    const chatForm = document.getElementById('chat-form');
+    const typingIndicator = document.getElementById('typing-indicator');
+    const progressFill = document.getElementById('progress-fill');
+    const chatStatus = document.getElementById('chat-status');
+    const summaryContainer = document.getElementById('summary-container');
+    const summaryContent = document.getElementById('summary-content');
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      initializeKeeper();
+      setupEventListeners();
+    });
+    
+    function initializeKeeper() {
+      // Get student info
+      const studentId = localStorage.getItem('lighthouse_student_id');
+      const studentName = localStorage.getItem('lighthouse_student_name');
+      
+      if (!studentId) {
+        window.location.href = 'lighthouse-index.html';
+        return;
+      }
+      
+      studentData = { id: studentId, name: studentName };
+      document.getElementById('student-info').textContent = `${studentName} (${studentId})`;
+      
+      // Check if reflection already completed
+      const reflectionComplete = localStorage.getItem('lighthouse_reflection_complete');
+      if (reflectionComplete === 'true') {
+        // Show option to restart or view previous
+        showReflectionOptions();
+      } else {
+        // Start fresh reflection
+        startReflection();
+      }
+    }
+    
+    function setupEventListeners() {
+      // Form submission
+      chatForm.addEventListener('submit', handleSubmit);
+      
+      // Auto-resize textarea
+      chatInput.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+      });
+      
+      // Enter to send (Shift+Enter for new line)
+      chatInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          handleSubmit(e);
+        }
+      });
+    }
+    
+    function showReflectionOptions() {
+      addMessage('system', 'You have already completed your Major Reflection. Would you like to start a new one or continue to the main lighthouse?');
+      
+      // Add action buttons in chat
+      const actionDiv = document.createElement('div');
+      actionDiv.className = 'message system';
+      actionDiv.innerHTML = `
+        <button class="btn btn-primary" onclick="startReflection()" style="margin: 5px;">Start New Reflection</button>
+        <button class="btn btn-secondary" onclick="window.location.href='lighthouse-main.html'" style="margin: 5px;">Return to Lighthouse</button>
+      `;
+      chatMessages.appendChild(actionDiv);
+      scrollToBottom();
+    }
+    
+function startReflection() {
+    chatMessages.innerHTML = '';
+    currentTheme = 0;
+    conversationHistory = [];
+    updateProgress();
+    
+    // Multiple messages with delays
+    addMessageWithDelay(`Close your eyes for a moment and take some deep breaths.`, 100);
+    addMessageWithDelay(`Imagine you hear the gentle thrum of waves breaking against a shoreline.`, 1000);
+    addMessageWithDelay(`Let's take three slow, deep breaths together to settle and focus on this conversation.`, 4000);
+    addMessageWithDelay(`Type &ldquo;Let&rsquo;s begin&rdquo; when you&rsquo;re ready to start our reflection.`, 6000);
+    
+    chatStatus.textContent = 'Take your time to settle in';
+}
+    
+    async function handleSubmit(e) {
+      e.preventDefault();
+      
+      if (isProcessing) return;
+      
+      const message = chatInput.value.trim();
+      if (!message) return;
+      
+      // Add student message
+      addMessage('student', message);
+      chatInput.value = '';
+      chatInput.style.height = 'auto';
+      
+      // Store in conversation history
+      conversationHistory.push({
+        role: 'student',
+        content: message,
+        theme: THEMES[currentTheme],
+        timestamp: new Date().toISOString()
+      });
+      
+      // Process with Keeper Cam
+      await processWithKeeper(message);
+    }
+    
+    async function processWithKeeper(studentMessage) {
+      isProcessing = true;
+      sendBtn.disabled = true;
+      showTyping();
+      
+      try {
+        const conversationContext = prepareConversationContext();
+        
+        // Create form data to avoid CORS preflight
+        const formData = new URLSearchParams();
+        formData.append('action', 'keeper_chat');
+        formData.append('studentId', studentData.id);
+        formData.append('studentName', studentData.name);
+        formData.append('currentTheme', THEMES[currentTheme]);
+        formData.append('themeIndex', currentTheme);
+        formData.append('studentMessage', studentMessage);
+        formData.append('conversationHistory', JSON.stringify(conversationHistory));
+        formData.append('context', JSON.stringify(conversationContext));
+        
+        const response = await fetch(KEEPER_API_URL, {
+          method: 'POST',
+          body: formData
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Server error: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        hideTyping();
+        
+        if (result.success) {
+          addMessage('keeper', result.response);
+          
+          conversationHistory.push({
+            role: 'keeper',
+            content: result.response,
+            theme: THEMES[currentTheme],
+            timestamp: new Date().toISOString()
+          });
+          
+          if (result.themeComplete) {
+            await completeTheme();
+          }
+          
+          chatStatus.textContent = result.status || `Exploring: ${THEMES[currentTheme]}`;
+          
+        } else {
+          addMessage('system', 'I apologize, but I encountered an issue. Please try again.');
+          console.error('Keeper response error:', result.error);
+        }
+        
+      } catch (error) {
+        console.error('Error processing with Keeper:', error);
+        hideTyping();
+        addMessage('system', 'Navigation instruments are temporarily offline. Please try again.');
+      }
+      
+      isProcessing = false;
+      sendBtn.disabled = false;
+    }
+    
+    function prepareConversationContext() {
+      return {
+        themes: THEMES,
+        currentThemeIndex: currentTheme,
+        totalThemes: THEMES.length,
+        conversationLength: conversationHistory.length,
+        completedThemes: THEMES.slice(0, currentTheme)
+      };
+    }
+    
+    async function completeTheme() {
+      // Mark current theme as completed
+      const themeElement = document.querySelector(`[data-theme="${THEMES[currentTheme]}"]`);
+      if (themeElement) {
+        themeElement.classList.add('completed');
+      }
+      
+      // Move to next theme
+      currentTheme++;
+      
+      if (currentTheme >= THEMES.length) {
+        // All themes completed - generate summary
+        await generateFinalSummary();
+      } else {
+        // Update progress and continue
+        updateProgress();
+        
+        // Brief pause before next theme
+        setTimeout(() => {
+          addMessage('system', `Navigation checkpoint reached. Moving to: ${THEMES[currentTheme].replace(/([A-Z])/g, ' $1').trim()}`);
+        }, 1000);
+      }
+    }
+    
+    function updateProgress() {
+      // Update progress bar
+      const progress = (currentTheme / THEMES.length) * 100;
+      progressFill.style.width = `${progress}%`;
+      
+      // Update theme indicators
+      document.querySelectorAll('.theme-step').forEach((step, index) => {
+        step.classList.remove('active');
+        if (index === currentTheme) {
+          step.classList.add('active');
+        }
+      });
+    }
+    
+    async function generateFinalSummary() {
+      showTyping();
+      chatStatus.textContent = 'Generating your navigation chart...';
+      
+      try {
+        // Create form data to avoid CORS preflight
+        const formData = new URLSearchParams();
+        formData.append('action', 'generate_summary');
+        formData.append('studentId', studentData.id);
+        formData.append('studentName', studentData.name);
+        formData.append('conversationHistory', JSON.stringify(conversationHistory));
+        formData.append('completedAt', new Date().toISOString());
+        
+        const response = await fetch(KEEPER_API_URL, {
+          method: 'POST',
+          body: formData
+        });
+        
+        const result = await response.json();
+        
+        hideTyping();
+        
+        if (result.success) {
+          // Show final message
+          addMessage('keeper', `Navigator, we've charted all the waters of your inner compass. Your navigation chart is ready. This wisdom will guide you well as you begin interviewing those affected by your chosen wicked problem.
+
+Fair winds and following seas on your journey ahead.`);
+          
+          // Show summary
+          summaryContent.textContent = result.summary;
+          summaryContainer.style.display = 'block';
+          
+          // Mark reflection as complete
+          localStorage.setItem('lighthouse_reflection_complete', 'true');
+          localStorage.setItem('lighthouse_reflection_summary', result.summary);
+          localStorage.setItem('lighthouse_reflection_date', new Date().toISOString());
+          
+          chatStatus.textContent = 'Major Reflection completed successfully';
+          
+          // Scroll to summary
+          setTimeout(() => {
+            summaryContainer.scrollIntoView({ behavior: 'smooth' });
+          }, 500);
+          
+        } else {
+          addMessage('system', 'Error generating your navigation chart. Please contact your instructor.');
+          console.error('Summary generation error:', result.error);
+        }
+        
+      } catch (error) {
+        console.error('Error generating summary:', error);
+        hideTyping();
+        addMessage('system', 'Unable to generate your chart right now. Please try again.');
+      }
+    }
+    
+// Replace the addMessage function in keeper-cam.html with this version:
+
+    function addMessage(sender, content) {
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}`;
+    
+    // Convert **text** to <strong>text</strong> for bold formatting
+    const formattedContent = content
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // **bold** -> <strong>bold</strong>
+        .replace(/\*(.*?)\*/g, '<em>$1</em>');             // *italic* -> <em>italic</em>
+    
+    messageDiv.innerHTML = formattedContent;
+    
+    chatMessages.appendChild(messageDiv);
+    scrollToBottom();
+    }
+    
+    function scrollToBottom() {
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    function showTyping() {
+      typingIndicator.style.display = 'flex';
+      scrollToBottom();
+    }
+    
+    function hideTyping() {
+      typingIndicator.style.display = 'none';
+    }
+    
+    function downloadSummary() {
+      const summaryText = summaryContent.textContent;
+      const blob = new Blob([summaryText], { type: 'text/plain' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `lighthouse-navigation-chart-${studentData.id}.txt`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>
