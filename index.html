@@ -203,50 +203,7 @@
       z-index: -1;
     }
     
-    .disclaimer {
-      max-width: 800px;
-      margin-top: 40px;
-      text-align: center;
-      font-size: 15px;
-      color: var(--light-text);
-      line-height: 1.6;
-      padding: 0 20px;
-      /* Add a paper texture background */
-      background-color: rgba(106, 96, 84, 0.7);
-      padding: 20px;
-      border-radius: var(--border-radius);
-      position: relative;
-      /* Add a subtle torn edge effect */
-      clip-path: polygon(
-        0% 5%, 2% 0%, 98% 0%, 100% 5%,
-        100% 95%, 98% 100%, 2% 100%, 0% 95%
-      );
-    }
-    
-    /* Add decorative corners to disclaimer */
-    .disclaimer::before,
-    .disclaimer::after {
-      content: "";
-      position: absolute;
-      width: 30px;
-      height: 30px;
-      background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2050%2050%22%3E%0A%20%20%3Cpath%20d%3D%22M0%200%20L0%2040%20C0%2020%2C%2020%200%2C%2040%200%20Z%22%20fill%3D%22none%22%20stroke%3D%22%23B0A289%22%20stroke-width%3D%221.5%22%20%2F%3E%0A%20%20%3Cpath%20d%3D%22M0%205%20L0%2030%20C0%2015%2C%2015%200%2C%2030%200%20Z%22%20fill%3D%22none%22%20stroke%3D%22%239D927F%22%20stroke-width%3D%221%22%20%2F%3E%0A%20%20%3Ccircle%20cx%3D%228%22%20cy%3D%228%22%20r%3D%221.5%22%20fill%3D%22%23B0A289%22%20%2F%3E%0A%20%20%3Ccircle%20cx%3D%2216%22%20cy%3D%2216%22%20r%3D%221.5%22%20fill%3D%22%23B0A289%22%20%2F%3E%0A%20%20%3Ccircle%20cx%3D%2224%22%20cy%3D%2224%22%20r%3D%221.5%22%20fill%3D%22%23B0A289%22%20%2F%3E%0A%3C%2Fsvg%3E');
-      background-size: contain;
-      background-repeat: no-repeat;
-      opacity: 0.8;
-    }
-    
-    .disclaimer::before {
-      top: 5px;
-      left: 5px;
-    }
-    
-    .disclaimer::after {
-      bottom: 5px;
-      right: 5px;
-      transform: rotate(180deg);
-    }
-    
+
     /* Mobile optimization */
     @media (max-width: 768px) {
       .lighthouse-container {
@@ -303,10 +260,7 @@
       </div>
     </div>
     
-    <div class="disclaimer">
-      <p>The Lighthouse Academy guides you in a critical thinking exercise.</p>
-    </div>
-  </div>
+
   
   <script>
 // Configuration
