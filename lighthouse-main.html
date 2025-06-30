@@ -678,10 +678,15 @@
     
     // Logout function
     function logout() {
+      // Clear all lighthouse-related localStorage
       localStorage.removeItem('lighthouse_student_id');
       localStorage.removeItem('lighthouse_student_name');
       localStorage.removeItem('lighthouse_reflection_complete');
-      window.location.href = 'lighthouse-index.html';
+      localStorage.removeItem('lighthouse_reflection_summary');
+      localStorage.removeItem('lighthouse_reflection_date');
+      
+      // Redirect to correct login page
+      window.location.href = 'index.html';  // Changed from 'lighthouse-index.html'
     }
     
     // Navigation functions
